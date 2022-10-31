@@ -71,11 +71,11 @@ export const handleEncryptedEvent = (player, event, options, sessions, eventBus)
     // set of stream(s) or media data."
     // eslint-disable-next-line max-len
     // @see [Initialization Data Spec]{@link https://www.w3.org/TR/encrypted-media/#initialization-data}
-    if (hasSession(sessions, initData) || !initData) {
+    if (!initData) {
       // TODO convert to videojs.log.debug and add back in
       // https://github.com/videojs/video.js/pull/4780
       // videojs.log('eme',
-      //             'Already have a configured session for init data, ignoring event.');
+      //             'Empty init data, ignoring event.');
       return Promise.resolve();
     }
 
