@@ -244,7 +244,10 @@ const onPlayerReady = (player, emeError) => {
     });
   }
 
-  if (window.MediaKeys && !(videojs.IS_IOS && videojs.IOS_VERSION >= 16)) {
+  if (window.MediaKeys
+      && (!videojs.browser.IS_IOS
+          || videojs.browser.IOS_VERSION < 16
+          || !window.WebKitMediaKeys)) {
     console.log("Using standard EME");
     // Support EME 05 July 2016
     // Chrome 42+, Firefox 47+, Edge, Safari 12.1+ on macOS 10.14+
