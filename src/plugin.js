@@ -244,9 +244,23 @@ const onPlayerReady = (player, emeError) => {
     });
   }
 
-  if (window.MediaKeys) {
+  if (window.MediaKeys
+      && (!videojs.browser.IS_IOS
+          || videojs.browser.IOS_VERSION < 16
+          || !window.WebKitMediaKeys)) {
     // Support EME 05 July 2016
     // Chrome 42+, Firefox 47+, Edge, Safari 12.1+ on macOS 10.14+
+    // Playback on IOS >= 16 fails if using standards based EME, so fall back
+    // to WebKitMediaKeys for these versions.
+    // The issue with standards based EME is basically tracked here:
+    // https://github.com/videojs/videojs-contrib-eme/issues/181
+    // (Downgrading to 3.x makes videojs-contrib-eme not use standards based EME)
+    //
+    // With IOS 15 there was an issue that needed standards based EME,
+    // this can be found here:
+    // https://github.com/videojs/videojs-contrib-eme/issues/140
+    //
+    // All in all, this seems pretty broken. :(
     player.tech_.el_.addEventListener('encrypted', (event) => {
       // TODO convert to videojs.log.debug and add back in
       // https://github.com/videojs/video.js/pull/4780
