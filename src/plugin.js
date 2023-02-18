@@ -245,6 +245,7 @@ const onPlayerReady = (player, emeError) => {
   }
 
   if (window.MediaKeys && !(videojs.IS_IOS && videojs.IOS_VERSION >= 16)) {
+    console.log("Using standard EME");
     // Support EME 05 July 2016
     // Chrome 42+, Firefox 47+, Edge, Safari 12.1+ on macOS 10.14+
     // Playback on IOS >= 16 fails if using standards based EME, so fall back
@@ -267,6 +268,7 @@ const onPlayerReady = (player, emeError) => {
         .catch(emeError);
     });
   } else if (window.WebKitMediaKeys) {
+    console.log("Using webkit EME");
     const handleFn = (event) => {
       // TODO convert to videojs.log.debug and add back in
       // https://github.com/videojs/video.js/pull/4780
