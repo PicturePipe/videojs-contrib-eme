@@ -238,7 +238,9 @@ const onPlayerReady = (player, emeError) => {
    */
   if ('webkitCurrentPlaybackTargetIsWireless' in player.tech_.el_) {
     player.tech_.el_.addEventListener('webkitcurrentplaybacktargetiswirelesschanged', () => {
-      player.eme.sessions = [];
+      if (player.eme && player.eme.sessions) {
+        player.eme.sessions = [];
+      }
     });
   }
 
